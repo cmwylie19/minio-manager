@@ -12,6 +12,10 @@ One caveat might be that idk if Pepr would be able to set the Tenant servers  wi
 ```bash
 npm run k3d-setup   
 npm run apply-crd    
+kubectl create ns minio
+k label no/k3d-pepr-dev-agent-0  minio=true
+k label no/k3d-pepr-dev-agent-1  minio=true
+k label no/k3d-pepr-dev-agent-2  minio=true
 ```
 
 ```yaml

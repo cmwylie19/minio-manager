@@ -1,5 +1,4 @@
 import { Capability, K8s, a, Log } from "pepr";
-import { KubernetesObject } from "kubernetes-fluent-client";
 import { Tenant } from "./generated/tenant-v2";
 
 export const MinIOManager = new Capability({
@@ -13,19 +12,22 @@ const minIOLabel = "minio";
 const acceptableNodes: Record<string, string> = {};
 const tenantInstances: Record<string, Tenant> = {};
 
-
 /*
  * Keep an updated list of tenant instances
  */
 
 When(Tenant)
   .IsCreatedOrUpdated()
-  .Mutate(tenant =>
-    tenant.SetAnnotation("pepr.dev/controller", "minio-manager"),
-  )
+  .Mutate(tenant => {
+    tenant.SetAnnotation("pepr.dev/controller", "minio-manager");
+    tenant.Raw.spec.pools[0].servers = Object.keys(acceptableNodes).length;
+  })
   .Watch(tenant => {
-    tenantInstances[`${tenant.metadata.name}/${tenant.metadata.namespace}`] = tenant;
-    Log.debug(`tenantInstances: ${JSON.stringify(tenantInstances)}`);
+    tenantInstances[`${tenant.metadata.name}/${tenant.metadata.namespace}`] =
+      tenant;
+    Log.debug(
+      `tenantInstance: ${JSON.stringify(tenantInstances[`${tenant.metadata.name}/${tenant.metadata.namespace}`], undefined, 2)}`,
+    );
   });
 
 /*
@@ -48,44 +50,31 @@ When(Tenant)
 
 When(a.Node)
   .IsCreatedOrUpdated()
-  .Mutate(no => {
-    const timeStamp = new Date().toISOString();
-    no.SetAnnotation("pepr.dev/updated", timeStamp);
-  })
   .Watch(async no => {
     const timeStamp = new Date().toISOString();
     if (no.metadata?.labels[minIOLabel] === "true") {
       acceptableNodes[no.metadata?.name] = timeStamp;
-    }
-    // Update the servers in minIO instances
-    for (const [name, obj] of Object.entries(tenantInstances)) {
-      const {namespace} = obj.metadata
-      await K8s(Tenant, {
-        name,
-        namespace,
-      }).Delete();
-      try {
-        await K8s(Tenant, {
-          name,
-          namespace,
-        }).Apply({
-          spec: {
-            ...tenantInstances[`${name}/$namespace}`].spec,
-            pools: [
-              {
-                ...tenantInstances[`${name}/${namespace}`].spec.pools[0],
-                servers: Object.keys(acceptableNodes).length,
-              },
-            ],
-          },
-        });
-      } catch (error) {
-        Log.error(
-          `could not update servers in tenant ${name} in namespace ${namespace}`,
-          {
-            error,
-          },
-        );
+
+      // Update the servers in minIO instances
+      for (const [name, obj] of Object.entries(tenantInstances)) {
+        const { namespace } = obj.metadata;
+        await K8s(Tenant).Delete(obj);
+        try {
+          obj.spec.pools[0].servers = Object.keys(acceptableNodes).length;
+          delete obj.metadata.managedFields;
+          delete obj.metadata.resourceVersion;
+          delete obj.metadata.uid;
+          delete obj.metadata.generation;
+          delete obj.metadata.creationTimestamp
+          await K8s(Tenant).Apply(obj);
+        } catch (error) {
+          Log.error(
+            `could not update servers in tenant ${name} in namespace ${namespace}`,
+            {
+              error,
+            },
+          );
+        }
       }
     }
   });
@@ -96,32 +85,25 @@ When(a.Node)
 
 When(a.Node)
   .IsDeleted()
-  .Mutate(no => {
-    delete acceptableNodes[no.Raw.metadata?.name];
-  })
-  .Watch(async () => {
-     // Update the servers in minIO instances
-     for (const [name, obj] of Object.entries(tenantInstances)) {
-      const {namespace} = obj.metadata
-      await K8s(Tenant, {
-        name,
-        namespace,
-      }).Delete();
+
+  .Watch(async no => {
+    if (no.metadata?.labels[minIOLabel] === "true") {
+      delete acceptableNodes[no.metadata?.name];
+    }
+
+    // Update the servers in minIO instances
+    for (const [name, obj] of Object.entries(tenantInstances)) {
+      const { namespace } = obj.metadata;
+      await K8s(Tenant).Delete(obj);
       try {
-        await K8s(Tenant, {
-          name,
-          namespace,
-        }).Apply({
-          spec: {
-            ...tenantInstances[`${name}/$namespace}`].spec,
-            pools: [
-              {
-                ...tenantInstances[`${name}/${namespace}`].spec.pools[0],
-                servers: Object.keys(acceptableNodes).length,
-              },
-            ],
-          },
-        },{force: true});
+        obj.spec.pools[0].servers = Object.keys(acceptableNodes).length;
+        delete obj.metadata.managedFields;
+        delete obj.metadata.resourceVersion;
+        delete obj.metadata.uid;
+        delete obj.metadata.generation;
+        delete obj.metadata.creationTimestamp
+        await K8s(Tenant).Apply(obj);
+
       } catch (error) {
         Log.error(
           `could not update servers in tenant ${name} in namespace ${namespace}`,
