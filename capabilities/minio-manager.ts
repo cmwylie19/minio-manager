@@ -20,7 +20,7 @@ const tenantInstances: Record<string, Tenant> = {};
 //   pv.Raw.spec.persistentVolumeReclaimPolicy = "Retain";
 // });
 
-When(a.PersistentVolume);
+// When(a.PersistentVolume);
 
 /*
  * Keep an updated list of tenant instances
