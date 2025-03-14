@@ -16,11 +16,11 @@ const tenantInstances: Record<string, Tenant> = {};
 // .IsCreated()
 // .WithLabel("tbd")
 // .Mutate(pv => {
-//   // Set volumeClaimPolicy to return 
+//   // Set volumeClaimPolicy to return
 //   pv.Raw.spec.persistentVolumeReclaimPolicy = "Retain";
 // });
 
-When(a.PersistentVolume)
+When(a.PersistentVolume);
 
 /*
  * Keep an updated list of tenant instances
@@ -28,16 +28,39 @@ When(a.PersistentVolume)
 
 When(Tenant)
   .IsCreatedOrUpdated()
-  .Mutate(tenant => {
-    tenant.SetAnnotation("pepr.dev/controller", "minio-manager");
-    tenant.Raw.spec.pools[0].servers = Object.keys(acceptableNodes).length;
-  })
-  .Watch(tenant => {
-    tenantInstances[`${tenant.metadata.name}/${tenant.metadata.namespace}`] =
-      tenant;
-    Log.debug(
-      `tenantInstance: ${JSON.stringify(tenantInstances[`${tenant.metadata.name}/${tenant.metadata.namespace}`], undefined, 2)}`,
-    );
+  // .Mutate(tenant => {
+  //   tenant.SetAnnotation("pepr.dev/controller", "minio-manager");
+  //   tenant.Raw.spec.pools[0].servers = Object.keys(acceptableNodes).length;
+  // })
+  .Watch(async tenant => {
+    if (tenant.spec.pools[0].servers !== Object.keys(acceptableNodes).length) {
+      try {
+        delete tenant.metadata.managedFields;
+        delete tenant.metadata.resourceVersion;
+        delete tenant.metadata.uid;
+        delete tenant.metadata.generation;
+        delete tenant.metadata.creationTimestamp;
+        const aN = Object.keys(acceptableNodes).length;
+        console.log(aN)
+        tenant.spec.pools[0].servers = Object.keys(acceptableNodes).length;
+        tenantInstances[
+          `${tenant.metadata.name}/${tenant.metadata.namespace}`
+        ] = tenant;
+        Log.debug(
+          `tenantInstance: ${JSON.stringify(tenantInstances[`${tenant.metadata.name}/${tenant.metadata.namespace}`], undefined, 2)}`,
+        );
+
+        await K8s(Tenant).Delete(tenant);
+        await K8s(Tenant).Apply(tenant);
+      } catch (error) {
+        Log.error(
+          `could not update servers in tenant ${tenant.metadata.name} in namespace ${tenant.metadata.namespace}`,
+          {
+            error,
+          },
+        );
+      }
+    }
   });
 
 /*
@@ -75,7 +98,7 @@ When(a.Node)
           delete obj.metadata.resourceVersion;
           delete obj.metadata.uid;
           delete obj.metadata.generation;
-          delete obj.metadata.creationTimestamp
+          delete obj.metadata.creationTimestamp;
           await K8s(Tenant).Apply(obj);
         } catch (error) {
           Log.error(
@@ -111,9 +134,8 @@ When(a.Node)
         delete obj.metadata.resourceVersion;
         delete obj.metadata.uid;
         delete obj.metadata.generation;
-        delete obj.metadata.creationTimestamp
+        delete obj.metadata.creationTimestamp;
         await K8s(Tenant).Apply(obj);
-
       } catch (error) {
         Log.error(
           `could not update servers in tenant ${name} in namespace ${namespace}`,
