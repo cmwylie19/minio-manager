@@ -12,6 +12,16 @@ const minIOLabel = "minio";
 const acceptableNodes: Record<string, string> = {};
 const tenantInstances: Record<string, Tenant> = {};
 
+// When(a.PersistentVolume)
+// .IsCreated()
+// .WithLabel("tbd")
+// .Mutate(pv => {
+//   // Set volumeClaimPolicy to return 
+//   pv.Raw.spec.persistentVolumeReclaimPolicy = "Retain";
+// });
+
+When(a.PersistentVolume)
+
 /*
  * Keep an updated list of tenant instances
  */
