@@ -1,0 +1,42 @@
+{
+  "name": "minio-manager",
+  "version": "0.0.1",
+  "description": "Manage the MinIO Operator based on Nodes",
+  "keywords": [
+    "pepr",
+    "k8s",
+    "policy-engine",
+    "pepr-module",
+    "security"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "pepr": {
+    "uuid": "minio-manager",
+    "onError": "reject",
+    "webhookTimeout": 10,
+    "customLabels": {
+      "namespace": {
+        "pepr.dev": "minio-manager"
+      }
+    },
+    "alwaysIgnore": {
+      "namespaces": []
+    },
+    "includedFiles": [],
+    "env": {}
+  },
+  "scripts": {
+    "k3d-setup": "k3d cluster delete pepr-dev && k3d cluster create pepr-dev --k3s-arg '--debug@server:0' --wait && kubectl rollout status deployment -n kube-system",
+    "generate-crd": "npx kubernetes-fluent-client crd https://raw.githubusercontent.com/minio/operator/a7dfa7c12072efa56c46d628d09ba29b3baa1c91/resources/base/crds/minio.min.io_tenants.yaml capabilities/generated",
+    "apply-crd": "kubectl apply -f https://raw.githubusercontent.com/minio/operator/a7dfa7c12072efa56c46d628d09ba29b3baa1c91/resources/base/crds/minio.min.io_tenants.yaml"
+  },
+  "dependencies": {
+    "pepr": "0.46.1",
+    "undici": "^7.0.1"
+  },
+  "devDependencies": {
+    "typescript": "5.7.3"
+  }
+}
