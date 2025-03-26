@@ -38,7 +38,7 @@ export interface TenantSpec {
   logging?: Logging;
   mountPath?: string;
   podManagementPolicy?: string;
-  pools: SpecPool[];
+  pools:                      SpecPool[];
   poolsMetadata?: PoolsMetadata;
   priorityClassName?: string;
   prometheusOperator?: boolean;
@@ -53,9 +53,9 @@ export interface TenantSpec {
 }
 
 export interface AdditionalVolumeMount {
-  mountPath: string;
+  mountPath:          string;
   mountPropagation?: string;
-  name: string;
+  name:               string;
   readOnly?: boolean;
   recursiveReadOnly?: string;
   subPath?: string;
@@ -82,7 +82,7 @@ export interface AdditionalVolume {
   hostPath?: AdditionalVolumeHostPath;
   image?: AdditionalVolumeImage;
   iscsi?: AdditionalVolumeIscsi;
-  name: string;
+  name:                   string;
   nfs?: AdditionalVolumeNFS;
   persistentVolumeClaim?: AdditionalVolumePersistentVolumeClaim;
   photonPersistentDisk?: AdditionalVolumePhotonPersistentDisk;
@@ -100,13 +100,13 @@ export interface AdditionalVolumeAwsElasticBlockStore {
   fsType?: string;
   partition?: number;
   readOnly?: boolean;
-  volumeID: string;
+  volumeID:   string;
 }
 
 export interface AdditionalVolumeAzureDisk {
   cachingMode?: string;
-  diskName: string;
-  diskURI: string;
+  diskName:     string;
+  diskURI:      string;
   fsType?: string;
   kind?: string;
   readOnly?: boolean;
@@ -115,11 +115,11 @@ export interface AdditionalVolumeAzureDisk {
 export interface AdditionalVolumeAzureFile {
   readOnly?: boolean;
   secretName: string;
-  shareName: string;
+  shareName:  string;
 }
 
 export interface AdditionalVolumeCephfs {
-  monitors: string[];
+  monitors:    string[];
   path?: string;
   readOnly?: boolean;
   secretFile?: string;
@@ -135,7 +135,7 @@ export interface AdditionalVolumeCinder {
   fsType?: string;
   readOnly?: boolean;
   secretRef?: FluffySecretRef;
-  volumeID: string;
+  volumeID:   string;
 }
 
 export interface FluffySecretRef {
@@ -150,13 +150,13 @@ export interface AdditionalVolumeConfigMap {
 }
 
 export interface PurpleItem {
-  key: string;
+  key:   string;
   mode?: number;
-  path: string;
+  path:  string;
 }
 
 export interface AdditionalVolumeCSI {
-  driver: string;
+  driver:                string;
   fsType?: string;
   nodePublishSecretRef?: PurpleNodePublishSecretRef;
   readOnly?: boolean;
@@ -175,19 +175,19 @@ export interface AdditionalVolumeDownwardAPI {
 export interface FluffyItem {
   fieldRef?: PurpleFieldRef;
   mode?: number;
-  path: string;
+  path:              string;
   resourceFieldRef?: PurpleResourceFieldRef;
 }
 
 export interface PurpleFieldRef {
   apiVersion?: string;
-  fieldPath: string;
+  fieldPath:   string;
 }
 
 export interface PurpleResourceFieldRef {
   containerName?: string;
   divisor?: number | string;
-  resource: string;
+  resource:       string;
 }
 
 export interface AdditionalVolumeEmptyDir {
@@ -201,7 +201,7 @@ export interface AdditionalVolumeEphemeral {
 
 export interface PurpleVolumeClaimTemplate {
   metadata?: PurpleMetadata;
-  spec: PurpleSpec;
+  spec:      PurpleSpec;
 }
 
 export interface PurpleMetadata {
@@ -226,14 +226,14 @@ export interface PurpleSpec {
 
 export interface PurpleDataSource {
   apiGroup?: string;
-  kind: string;
-  name: string;
+  kind:      string;
+  name:      string;
 }
 
 export interface PurpleDataSourceRef {
   apiGroup?: string;
-  kind: string;
-  name: string;
+  kind:       string;
+  name:       string;
   namespace?: string;
 }
 
@@ -248,7 +248,7 @@ export interface PurpleSelector {
 }
 
 export interface PurpleMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -262,7 +262,7 @@ export interface AdditionalVolumeFc {
 }
 
 export interface AdditionalVolumeFlexVolume {
-  driver: string;
+  driver:     string;
   fsType?: string;
   options?: { [key: string]: string };
   readOnly?: boolean;
@@ -281,7 +281,7 @@ export interface AdditionalVolumeFlocker {
 export interface AdditionalVolumeGcePersistentDisk {
   fsType?: string;
   partition?: number;
-  pdName: string;
+  pdName:     string;
   readOnly?: boolean;
 }
 
@@ -293,12 +293,12 @@ export interface AdditionalVolumeGitRepo {
 
 export interface AdditionalVolumeGlusterfs {
   endpoints: string;
-  path: string;
+  path:      string;
   readOnly?: boolean;
 }
 
 export interface AdditionalVolumeHostPath {
-  path: string;
+  path:  string;
   type?: string;
 }
 
@@ -312,13 +312,13 @@ export interface AdditionalVolumeIscsi {
   chapAuthSession?: boolean;
   fsType?: string;
   initiatorName?: string;
-  iqn: string;
+  iqn:                string;
   iscsiInterface?: string;
-  lun: number;
+  lun:                number;
   portals?: string[];
   readOnly?: boolean;
   secretRef?: StickySecretRef;
-  targetPortal: string;
+  targetPortal:       string;
 }
 
 export interface StickySecretRef {
@@ -326,9 +326,9 @@ export interface StickySecretRef {
 }
 
 export interface AdditionalVolumeNFS {
-  path: string;
+  path:      string;
   readOnly?: boolean;
-  server: string;
+  server:    string;
 }
 
 export interface AdditionalVolumePersistentVolumeClaim {
@@ -338,13 +338,13 @@ export interface AdditionalVolumePersistentVolumeClaim {
 
 export interface AdditionalVolumePhotonPersistentDisk {
   fsType?: string;
-  pdID: string;
+  pdID:    string;
 }
 
 export interface AdditionalVolumePortworxVolume {
   fsType?: string;
   readOnly?: boolean;
-  volumeID: string;
+  volumeID:  string;
 }
 
 export interface AdditionalVolumeProjected {
@@ -364,7 +364,7 @@ export interface PurpleClusterTrustBundle {
   labelSelector?: PurpleLabelSelector;
   name?: string;
   optional?: boolean;
-  path: string;
+  path:           string;
   signerName?: string;
 }
 
@@ -374,7 +374,7 @@ export interface PurpleLabelSelector {
 }
 
 export interface FluffyMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -386,9 +386,9 @@ export interface PurpleConfigMap {
 }
 
 export interface TentacledItem {
-  key: string;
+  key:   string;
   mode?: number;
-  path: string;
+  path:  string;
 }
 
 export interface PurpleDownwardAPI {
@@ -398,19 +398,19 @@ export interface PurpleDownwardAPI {
 export interface StickyItem {
   fieldRef?: FluffyFieldRef;
   mode?: number;
-  path: string;
+  path:              string;
   resourceFieldRef?: FluffyResourceFieldRef;
 }
 
 export interface FluffyFieldRef {
   apiVersion?: string;
-  fieldPath: string;
+  fieldPath:   string;
 }
 
 export interface FluffyResourceFieldRef {
   containerName?: string;
   divisor?: number | string;
-  resource: string;
+  resource:       string;
 }
 
 export interface PurpleSecret {
@@ -420,31 +420,31 @@ export interface PurpleSecret {
 }
 
 export interface IndigoItem {
-  key: string;
+  key:   string;
   mode?: number;
-  path: string;
+  path:  string;
 }
 
 export interface PurpleServiceAccountToken {
   audience?: string;
   expirationSeconds?: number;
-  path: string;
+  path:               string;
 }
 
 export interface AdditionalVolumeQuobyte {
   group?: string;
   readOnly?: boolean;
-  registry: string;
+  registry:  string;
   tenant?: string;
   user?: string;
-  volume: string;
+  volume:    string;
 }
 
 export interface AdditionalVolumeRbd {
   fsType?: string;
-  image: string;
+  image:      string;
   keyring?: string;
-  monitors: string[];
+  monitors:   string[];
   pool?: string;
   readOnly?: boolean;
   secretRef?: IndigoSecretRef;
@@ -457,14 +457,14 @@ export interface IndigoSecretRef {
 
 export interface AdditionalVolumeScaleIO {
   fsType?: string;
-  gateway: string;
+  gateway:           string;
   protectionDomain?: string;
   readOnly?: boolean;
-  secretRef: IndecentSecretRef;
+  secretRef:         IndecentSecretRef;
   sslEnabled?: boolean;
   storageMode?: string;
   storagePool?: string;
-  system: string;
+  system:            string;
   volumeName?: string;
 }
 
@@ -480,9 +480,9 @@ export interface AdditionalVolumeSecret {
 }
 
 export interface IndecentItem {
-  key: string;
+  key:   string;
   mode?: number;
-  path: string;
+  path:  string;
 }
 
 export interface AdditionalVolumeStorageos {
@@ -501,7 +501,7 @@ export interface AdditionalVolumeVsphereVolume {
   fsType?: string;
   storagePolicyID?: string;
   storagePolicyName?: string;
-  volumePath: string;
+  volumePath:         string;
 }
 
 export interface Bucket {
@@ -521,7 +521,7 @@ export interface Configuration {
 }
 
 export interface SpecEnv {
-  name: string;
+  name:       string;
   value?: string;
   valueFrom?: PurpleValueFrom;
 }
@@ -534,24 +534,24 @@ export interface PurpleValueFrom {
 }
 
 export interface PurpleConfigMapKeyRef {
-  key: string;
+  key:       string;
   name?: string;
   optional?: boolean;
 }
 
 export interface TentacledFieldRef {
   apiVersion?: string;
-  fieldPath: string;
+  fieldPath:   string;
 }
 
 export interface TentacledResourceFieldRef {
   containerName?: string;
   divisor?: number | string;
-  resource: string;
+  resource:       string;
 }
 
 export interface PurpleSecretKeyRef {
-  key: string;
+  key:       string;
   name?: string;
   optional?: boolean;
 }
@@ -562,22 +562,22 @@ export interface ExposeServices {
 }
 
 export interface ExternalCACERTSecret {
-  name: string;
+  name:  string;
   type?: string;
 }
 
 export interface ExternalCERTSecretElement {
-  name: string;
+  name:  string;
   type?: string;
 }
 
 export interface PurpleExternalClientCERTSecret {
-  name: string;
+  name:  string;
   type?: string;
 }
 
 export interface ExternalClientCERTSecretElement {
-  name: string;
+  name:  string;
   type?: string;
 }
 
@@ -605,7 +605,7 @@ export interface InitContainer {
   imagePullPolicy?: string;
   lifecycle?: InitContainerLifecycle;
   livenessProbe?: InitContainerLivenessProbe;
-  name: string;
+  name:                      string;
   ports?: InitContainerPort[];
   readinessProbe?: InitContainerReadinessProbe;
   resizePolicy?: InitContainerResizePolicy[];
@@ -624,7 +624,7 @@ export interface InitContainer {
 }
 
 export interface InitContainerEnv {
-  name: string;
+  name:       string;
   value?: string;
   valueFrom?: FluffyValueFrom;
 }
@@ -637,24 +637,24 @@ export interface FluffyValueFrom {
 }
 
 export interface FluffyConfigMapKeyRef {
-  key: string;
+  key:       string;
   name?: string;
   optional?: boolean;
 }
 
 export interface StickyFieldRef {
   apiVersion?: string;
-  fieldPath: string;
+  fieldPath:   string;
 }
 
 export interface StickyResourceFieldRef {
   containerName?: string;
   divisor?: number | string;
-  resource: string;
+  resource:       string;
 }
 
 export interface FluffySecretKeyRef {
-  key: string;
+  key:       string;
   name?: string;
   optional?: boolean;
 }
@@ -695,12 +695,12 @@ export interface PurpleHTTPGet {
   host?: string;
   httpHeaders?: PurpleHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface PurpleHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
@@ -710,7 +710,7 @@ export interface PurpleSleep {
 
 export interface PurpleTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface PurplePreStop {
@@ -728,12 +728,12 @@ export interface FluffyHTTPGet {
   host?: string;
   httpHeaders?: FluffyHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface FluffyHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
@@ -743,7 +743,7 @@ export interface FluffySleep {
 
 export interface FluffyTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface InitContainerLivenessProbe {
@@ -764,7 +764,7 @@ export interface TentacledExec {
 }
 
 export interface PurpleGrpc {
-  port: number;
+  port:     number;
   service?: string;
 }
 
@@ -772,18 +772,18 @@ export interface TentacledHTTPGet {
   host?: string;
   httpHeaders?: TentacledHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface TentacledHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
 export interface TentacledTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface InitContainerPort {
@@ -812,7 +812,7 @@ export interface StickyExec {
 }
 
 export interface FluffyGrpc {
-  port: number;
+  port:     number;
   service?: string;
 }
 
@@ -820,22 +820,22 @@ export interface StickyHTTPGet {
   host?: string;
   httpHeaders?: StickyHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface StickyHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
 export interface StickyTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface InitContainerResizePolicy {
-  resourceName: string;
+  resourceName:  string;
   restartPolicy: string;
 }
 
@@ -846,7 +846,7 @@ export interface InitContainerResources {
 }
 
 export interface PurpleClaim {
-  name: string;
+  name:     string;
   request?: string;
 }
 
@@ -867,7 +867,7 @@ export interface InitContainerSecurityContext {
 
 export interface PurpleAppArmorProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface PurpleCapabilities {
@@ -884,7 +884,7 @@ export interface PurpleSELinuxOptions {
 
 export interface PurpleSeccompProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface PurpleWindowsOptions {
@@ -912,7 +912,7 @@ export interface IndigoExec {
 }
 
 export interface TentacledGrpc {
-  port: number;
+  port:     number;
   service?: string;
 }
 
@@ -920,29 +920,29 @@ export interface IndigoHTTPGet {
   host?: string;
   httpHeaders?: IndigoHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface IndigoHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
 export interface IndigoTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface InitContainerVolumeDevice {
   devicePath: string;
-  name: string;
+  name:       string;
 }
 
 export interface InitContainerVolumeMount {
-  mountPath: string;
+  mountPath:          string;
   mountPropagation?: string;
-  name: string;
+  name:               string;
   readOnly?: boolean;
   recursiveReadOnly?: string;
   subPath?: string;
@@ -960,7 +960,7 @@ export interface Kes {
   gcpWorkloadIdentityPool?: string;
   image?: string;
   imagePullPolicy?: string;
-  kesSecret: KesSecret;
+  kesSecret:                  KesSecret;
   keyName?: string;
   labels?: { [key: string]: string };
   nodeSelector?: { [key: string]: string };
@@ -985,7 +985,7 @@ export interface PurpleNodeAffinity {
 
 export interface PurplePreferredDuringSchedulingIgnoredDuringExecution {
   preference: PurplePreference;
-  weight: number;
+  weight:     number;
 }
 
 export interface PurplePreference {
@@ -994,13 +994,13 @@ export interface PurplePreference {
 }
 
 export interface TentacledMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
 
 export interface PurpleMatchField {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1015,13 +1015,13 @@ export interface PurpleNodeSelectorTerm {
 }
 
 export interface StickyMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
 
 export interface FluffyMatchField {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1033,7 +1033,7 @@ export interface PurplePodAffinity {
 
 export interface FluffyPreferredDuringSchedulingIgnoredDuringExecution {
   podAffinityTerm: PurplePodAffinityTerm;
-  weight: number;
+  weight:          number;
 }
 
 export interface PurplePodAffinityTerm {
@@ -1042,7 +1042,7 @@ export interface PurplePodAffinityTerm {
   mismatchLabelKeys?: string[];
   namespaces?: string[];
   namespaceSelector?: PurpleNamespaceSelector;
-  topologyKey: string;
+  topologyKey:        string;
 }
 
 export interface FluffyLabelSelector {
@@ -1051,7 +1051,7 @@ export interface FluffyLabelSelector {
 }
 
 export interface IndigoMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1062,7 +1062,7 @@ export interface PurpleNamespaceSelector {
 }
 
 export interface IndecentMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1073,7 +1073,7 @@ export interface FluffyRequiredDuringSchedulingIgnoredDuringExecution {
   mismatchLabelKeys?: string[];
   namespaces?: string[];
   namespaceSelector?: FluffyNamespaceSelector;
-  topologyKey: string;
+  topologyKey:        string;
 }
 
 export interface TentacledLabelSelector {
@@ -1082,7 +1082,7 @@ export interface TentacledLabelSelector {
 }
 
 export interface HilariousMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1093,7 +1093,7 @@ export interface FluffyNamespaceSelector {
 }
 
 export interface AmbitiousMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1105,7 +1105,7 @@ export interface PurplePodAntiAffinity {
 
 export interface TentacledPreferredDuringSchedulingIgnoredDuringExecution {
   podAffinityTerm: FluffyPodAffinityTerm;
-  weight: number;
+  weight:          number;
 }
 
 export interface FluffyPodAffinityTerm {
@@ -1114,7 +1114,7 @@ export interface FluffyPodAffinityTerm {
   mismatchLabelKeys?: string[];
   namespaces?: string[];
   namespaceSelector?: TentacledNamespaceSelector;
-  topologyKey: string;
+  topologyKey:        string;
 }
 
 export interface StickyLabelSelector {
@@ -1123,7 +1123,7 @@ export interface StickyLabelSelector {
 }
 
 export interface CunningMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1134,7 +1134,7 @@ export interface TentacledNamespaceSelector {
 }
 
 export interface MagentaMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1145,7 +1145,7 @@ export interface TentacledRequiredDuringSchedulingIgnoredDuringExecution {
   mismatchLabelKeys?: string[];
   namespaces?: string[];
   namespaceSelector?: StickyNamespaceSelector;
-  topologyKey: string;
+  topologyKey:        string;
 }
 
 export interface IndigoLabelSelector {
@@ -1154,7 +1154,7 @@ export interface IndigoLabelSelector {
 }
 
 export interface FriskyMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1165,13 +1165,13 @@ export interface StickyNamespaceSelector {
 }
 
 export interface MischievousMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
 
 export interface ClientCERTSecret {
-  name: string;
+  name:  string;
   type?: string;
 }
 
@@ -1192,7 +1192,7 @@ export interface KesContainerSecurityContext {
 
 export interface FluffyAppArmorProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface FluffyCapabilities {
@@ -1209,7 +1209,7 @@ export interface FluffySELinuxOptions {
 
 export interface FluffySeccompProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface FluffyWindowsOptions {
@@ -1220,7 +1220,7 @@ export interface FluffyWindowsOptions {
 }
 
 export interface KesEnv {
-  name: string;
+  name:       string;
   value?: string;
   valueFrom?: TentacledValueFrom;
 }
@@ -1233,30 +1233,30 @@ export interface TentacledValueFrom {
 }
 
 export interface TentacledConfigMapKeyRef {
-  key: string;
+  key:       string;
   name?: string;
   optional?: boolean;
 }
 
 export interface IndigoFieldRef {
   apiVersion?: string;
-  fieldPath: string;
+  fieldPath:   string;
 }
 
 export interface IndigoResourceFieldRef {
   containerName?: string;
   divisor?: number | string;
-  resource: string;
+  resource:       string;
 }
 
 export interface TentacledSecretKeyRef {
-  key: string;
+  key:       string;
   name?: string;
   optional?: boolean;
 }
 
 export interface KesExternalCERTSecret {
-  name: string;
+  name:  string;
   type?: string;
 }
 
@@ -1271,7 +1271,7 @@ export interface KesResources {
 }
 
 export interface FluffyClaim {
-  name: string;
+  name:     string;
   request?: string;
 }
 
@@ -1292,7 +1292,7 @@ export interface KesSecurityContext {
 
 export interface TentacledAppArmorProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface TentacledSELinuxOptions {
@@ -1304,11 +1304,11 @@ export interface TentacledSELinuxOptions {
 
 export interface TentacledSeccompProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface PurpleSysctl {
-  name: string;
+  name:  string;
   value: string;
 }
 
@@ -1330,12 +1330,12 @@ export interface KesToleration {
 export interface KesTopologySpreadConstraint {
   labelSelector?: IndecentLabelSelector;
   matchLabelKeys?: string[];
-  maxSkew: number;
+  maxSkew:             number;
   minDomains?: number;
   nodeAffinityPolicy?: string;
   nodeTaintsPolicy?: string;
-  topologyKey: string;
-  whenUnsatisfiable: string;
+  topologyKey:         string;
+  whenUnsatisfiable:   string;
 }
 
 export interface IndecentLabelSelector {
@@ -1344,7 +1344,7 @@ export interface IndecentLabelSelector {
 }
 
 export interface BraggadociousMatchExpression {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1369,12 +1369,12 @@ export interface IndecentHTTPGet {
   host?: string;
   httpHeaders?: IndecentHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface IndecentHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
@@ -1384,7 +1384,7 @@ export interface TentacledSleep {
 
 export interface IndecentTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface FluffyPreStop {
@@ -1402,12 +1402,12 @@ export interface HilariousHTTPGet {
   host?: string;
   httpHeaders?: HilariousHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface HilariousHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
@@ -1417,7 +1417,7 @@ export interface StickySleep {
 
 export interface HilariousTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface Liveness {
@@ -1438,7 +1438,7 @@ export interface LivenessExec {
 }
 
 export interface LivenessGrpc {
-  port: number;
+  port:     number;
   service?: string;
 }
 
@@ -1446,18 +1446,18 @@ export interface LivenessHTTPGet {
   host?: string;
   httpHeaders?: AmbitiousHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface AmbitiousHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
 export interface LivenessTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface Logging {
@@ -1471,16 +1471,16 @@ export interface SpecPool {
   annotations?: { [key: string]: string };
   containerSecurityContext?: PoolContainerSecurityContext;
   labels?: { [key: string]: string };
-  name: string;
+  name:                       string;
   nodeSelector?: { [key: string]: string };
   resources?: PoolResources;
   runtimeClassName?: string;
   securityContext?: PoolSecurityContext;
-  servers: number;
+  servers:                    number;
   tolerations?: PoolToleration[];
   topologySpreadConstraints?: PoolTopologySpreadConstraint[];
-  volumeClaimTemplate: PoolVolumeClaimTemplate;
-  volumesPerServer: number;
+  volumeClaimTemplate:        PoolVolumeClaimTemplate;
+  volumesPerServer:           number;
 }
 
 export interface PoolAffinity {
@@ -1496,7 +1496,7 @@ export interface FluffyNodeAffinity {
 
 export interface StickyPreferredDuringSchedulingIgnoredDuringExecution {
   preference: FluffyPreference;
-  weight: number;
+  weight:     number;
 }
 
 export interface FluffyPreference {
@@ -1505,13 +1505,13 @@ export interface FluffyPreference {
 }
 
 export interface MatchExpression1 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
 
 export interface TentacledMatchField {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1526,13 +1526,13 @@ export interface FluffyNodeSelectorTerm {
 }
 
 export interface MatchExpression2 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
 
 export interface StickyMatchField {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1544,7 +1544,7 @@ export interface FluffyPodAffinity {
 
 export interface IndigoPreferredDuringSchedulingIgnoredDuringExecution {
   podAffinityTerm: TentacledPodAffinityTerm;
-  weight: number;
+  weight:          number;
 }
 
 export interface TentacledPodAffinityTerm {
@@ -1553,7 +1553,7 @@ export interface TentacledPodAffinityTerm {
   mismatchLabelKeys?: string[];
   namespaces?: string[];
   namespaceSelector?: IndigoNamespaceSelector;
-  topologyKey: string;
+  topologyKey:        string;
 }
 
 export interface HilariousLabelSelector {
@@ -1562,7 +1562,7 @@ export interface HilariousLabelSelector {
 }
 
 export interface MatchExpression3 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1573,7 +1573,7 @@ export interface IndigoNamespaceSelector {
 }
 
 export interface MatchExpression4 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1584,7 +1584,7 @@ export interface IndigoRequiredDuringSchedulingIgnoredDuringExecution {
   mismatchLabelKeys?: string[];
   namespaces?: string[];
   namespaceSelector?: IndecentNamespaceSelector;
-  topologyKey: string;
+  topologyKey:        string;
 }
 
 export interface AmbitiousLabelSelector {
@@ -1593,7 +1593,7 @@ export interface AmbitiousLabelSelector {
 }
 
 export interface MatchExpression5 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1604,7 +1604,7 @@ export interface IndecentNamespaceSelector {
 }
 
 export interface MatchExpression6 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1616,7 +1616,7 @@ export interface FluffyPodAntiAffinity {
 
 export interface IndecentPreferredDuringSchedulingIgnoredDuringExecution {
   podAffinityTerm: StickyPodAffinityTerm;
-  weight: number;
+  weight:          number;
 }
 
 export interface StickyPodAffinityTerm {
@@ -1625,7 +1625,7 @@ export interface StickyPodAffinityTerm {
   mismatchLabelKeys?: string[];
   namespaces?: string[];
   namespaceSelector?: HilariousNamespaceSelector;
-  topologyKey: string;
+  topologyKey:        string;
 }
 
 export interface CunningLabelSelector {
@@ -1634,7 +1634,7 @@ export interface CunningLabelSelector {
 }
 
 export interface MatchExpression7 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1645,7 +1645,7 @@ export interface HilariousNamespaceSelector {
 }
 
 export interface MatchExpression8 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1656,7 +1656,7 @@ export interface IndecentRequiredDuringSchedulingIgnoredDuringExecution {
   mismatchLabelKeys?: string[];
   namespaces?: string[];
   namespaceSelector?: AmbitiousNamespaceSelector;
-  topologyKey: string;
+  topologyKey:        string;
 }
 
 export interface MagentaLabelSelector {
@@ -1665,7 +1665,7 @@ export interface MagentaLabelSelector {
 }
 
 export interface MatchExpression9 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1676,7 +1676,7 @@ export interface AmbitiousNamespaceSelector {
 }
 
 export interface MatchExpression10 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1698,7 +1698,7 @@ export interface PoolContainerSecurityContext {
 
 export interface StickyAppArmorProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface TentacledCapabilities {
@@ -1715,7 +1715,7 @@ export interface StickySELinuxOptions {
 
 export interface StickySeccompProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface StickyWindowsOptions {
@@ -1732,7 +1732,7 @@ export interface PoolResources {
 }
 
 export interface TentacledClaim {
-  name: string;
+  name:     string;
   request?: string;
 }
 
@@ -1753,7 +1753,7 @@ export interface PoolSecurityContext {
 
 export interface IndigoAppArmorProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface IndigoSELinuxOptions {
@@ -1765,11 +1765,11 @@ export interface IndigoSELinuxOptions {
 
 export interface IndigoSeccompProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface FluffySysctl {
-  name: string;
+  name:  string;
   value: string;
 }
 
@@ -1791,12 +1791,12 @@ export interface PoolToleration {
 export interface PoolTopologySpreadConstraint {
   labelSelector?: FriskyLabelSelector;
   matchLabelKeys?: string[];
-  maxSkew: number;
+  maxSkew:             number;
   minDomains?: number;
   nodeAffinityPolicy?: string;
   nodeTaintsPolicy?: string;
-  topologyKey: string;
-  whenUnsatisfiable: string;
+  topologyKey:         string;
+  whenUnsatisfiable:   string;
 }
 
 export interface FriskyLabelSelector {
@@ -1805,7 +1805,7 @@ export interface FriskyLabelSelector {
 }
 
 export interface MatchExpression11 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1840,14 +1840,14 @@ export interface FluffySpec {
 
 export interface FluffyDataSource {
   apiGroup?: string;
-  kind: string;
-  name: string;
+  kind:      string;
+  name:      string;
 }
 
 export interface FluffyDataSourceRef {
   apiGroup?: string;
-  kind: string;
-  name: string;
+  kind:       string;
+  name:       string;
   namespace?: string;
 }
 
@@ -1862,7 +1862,7 @@ export interface FluffySelector {
 }
 
 export interface MatchExpression12 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -1883,12 +1883,12 @@ export interface PurpleCondition {
   lastTransitionTime?: Date;
   message?: string;
   reason?: string;
-  status: string;
-  type: string;
+  status:              string;
+  type:                string;
 }
 
 export interface PurpleModifyVolumeStatus {
-  status: string;
+  status:                           string;
   targetVolumeAttributesClassName?: string;
 }
 
@@ -1915,7 +1915,7 @@ export interface ReadinessExec {
 }
 
 export interface ReadinessGrpc {
-  port: number;
+  port:     number;
   service?: string;
 }
 
@@ -1923,18 +1923,18 @@ export interface ReadinessHTTPGet {
   host?: string;
   httpHeaders?: CunningHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface CunningHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
 export interface ReadinessTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface ServiceMetadata {
@@ -1962,7 +1962,7 @@ export interface Container {
   imagePullPolicy?: string;
   lifecycle?: ContainerLifecycle;
   livenessProbe?: ContainerLivenessProbe;
-  name: string;
+  name:                      string;
   ports?: ContainerPort[];
   readinessProbe?: ContainerReadinessProbe;
   resizePolicy?: ContainerResizePolicy[];
@@ -1981,7 +1981,7 @@ export interface Container {
 }
 
 export interface ContainerEnv {
-  name: string;
+  name:       string;
   value?: string;
   valueFrom?: StickyValueFrom;
 }
@@ -1994,24 +1994,24 @@ export interface StickyValueFrom {
 }
 
 export interface StickyConfigMapKeyRef {
-  key: string;
+  key:       string;
   name?: string;
   optional?: boolean;
 }
 
 export interface IndecentFieldRef {
   apiVersion?: string;
-  fieldPath: string;
+  fieldPath:   string;
 }
 
 export interface IndecentResourceFieldRef {
   containerName?: string;
   divisor?: number | string;
-  resource: string;
+  resource:       string;
 }
 
 export interface StickySecretKeyRef {
-  key: string;
+  key:       string;
   name?: string;
   optional?: boolean;
 }
@@ -2052,12 +2052,12 @@ export interface AmbitiousHTTPGet {
   host?: string;
   httpHeaders?: MagentaHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface MagentaHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
@@ -2067,7 +2067,7 @@ export interface IndigoSleep {
 
 export interface AmbitiousTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface TentacledPreStop {
@@ -2085,12 +2085,12 @@ export interface CunningHTTPGet {
   host?: string;
   httpHeaders?: FriskyHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface FriskyHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
@@ -2100,7 +2100,7 @@ export interface IndecentSleep {
 
 export interface CunningTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface ContainerLivenessProbe {
@@ -2121,7 +2121,7 @@ export interface MagentaExec {
 }
 
 export interface StickyGrpc {
-  port: number;
+  port:     number;
   service?: string;
 }
 
@@ -2129,18 +2129,18 @@ export interface MagentaHTTPGet {
   host?: string;
   httpHeaders?: MischievousHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface MischievousHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
 export interface MagentaTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface ContainerPort {
@@ -2169,7 +2169,7 @@ export interface FriskyExec {
 }
 
 export interface IndigoGrpc {
-  port: number;
+  port:     number;
   service?: string;
 }
 
@@ -2177,22 +2177,22 @@ export interface FriskyHTTPGet {
   host?: string;
   httpHeaders?: BraggadociousHTTPHeader[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface BraggadociousHTTPHeader {
-  name: string;
+  name:  string;
   value: string;
 }
 
 export interface FriskyTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface ContainerResizePolicy {
-  resourceName: string;
+  resourceName:  string;
   restartPolicy: string;
 }
 
@@ -2203,7 +2203,7 @@ export interface ContainerResources {
 }
 
 export interface StickyClaim {
-  name: string;
+  name:     string;
   request?: string;
 }
 
@@ -2224,7 +2224,7 @@ export interface ContainerSecurityContext {
 
 export interface IndecentAppArmorProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface StickyCapabilities {
@@ -2241,7 +2241,7 @@ export interface IndecentSELinuxOptions {
 
 export interface IndecentSeccompProfile {
   localhostProfile?: string;
-  type: string;
+  type:              string;
 }
 
 export interface IndecentWindowsOptions {
@@ -2269,7 +2269,7 @@ export interface MischievousExec {
 }
 
 export interface IndecentGrpc {
-  port: number;
+  port:     number;
   service?: string;
 }
 
@@ -2277,29 +2277,29 @@ export interface MischievousHTTPGet {
   host?: string;
   httpHeaders?: HTTPHeader1[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface HTTPHeader1 {
-  name: string;
+  name:  string;
   value: string;
 }
 
 export interface MischievousTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface ContainerVolumeDevice {
   devicePath: string;
-  name: string;
+  name:       string;
 }
 
 export interface ContainerVolumeMount {
-  mountPath: string;
+  mountPath:          string;
   mountPropagation?: string;
-  name: string;
+  name:               string;
   readOnly?: boolean;
   recursiveReadOnly?: string;
   subPath?: string;
@@ -2313,7 +2313,7 @@ export interface SideCarsResources {
 }
 
 export interface IndigoClaim {
-  name: string;
+  name:     string;
   request?: string;
 }
 
@@ -2347,14 +2347,14 @@ export interface TentacledSpec {
 
 export interface TentacledDataSource {
   apiGroup?: string;
-  kind: string;
-  name: string;
+  kind:      string;
+  name:      string;
 }
 
 export interface TentacledDataSourceRef {
   apiGroup?: string;
-  kind: string;
-  name: string;
+  kind:       string;
+  name:       string;
   namespace?: string;
 }
 
@@ -2369,7 +2369,7 @@ export interface TentacledSelector {
 }
 
 export interface MatchExpression13 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -2390,12 +2390,12 @@ export interface FluffyCondition {
   lastTransitionTime?: Date;
   message?: string;
   reason?: string;
-  status: string;
-  type: string;
+  status:              string;
+  type:                string;
 }
 
 export interface FluffyModifyVolumeStatus {
-  status: string;
+  status:                           string;
   targetVolumeAttributesClassName?: string;
 }
 
@@ -2419,7 +2419,7 @@ export interface Volume {
   hostPath?: VolumeHostPath;
   image?: VolumeImage;
   iscsi?: VolumeIscsi;
-  name: string;
+  name:                   string;
   nfs?: VolumeNFS;
   persistentVolumeClaim?: VolumePersistentVolumeClaim;
   photonPersistentDisk?: VolumePhotonPersistentDisk;
@@ -2437,13 +2437,13 @@ export interface VolumeAwsElasticBlockStore {
   fsType?: string;
   partition?: number;
   readOnly?: boolean;
-  volumeID: string;
+  volumeID:   string;
 }
 
 export interface VolumeAzureDisk {
   cachingMode?: string;
-  diskName: string;
-  diskURI: string;
+  diskName:     string;
+  diskURI:      string;
   fsType?: string;
   kind?: string;
   readOnly?: boolean;
@@ -2452,11 +2452,11 @@ export interface VolumeAzureDisk {
 export interface VolumeAzureFile {
   readOnly?: boolean;
   secretName: string;
-  shareName: string;
+  shareName:  string;
 }
 
 export interface VolumeCephfs {
-  monitors: string[];
+  monitors:    string[];
   path?: string;
   readOnly?: boolean;
   secretFile?: string;
@@ -2472,7 +2472,7 @@ export interface VolumeCinder {
   fsType?: string;
   readOnly?: boolean;
   secretRef?: FriskySecretRef;
-  volumeID: string;
+  volumeID:   string;
 }
 
 export interface FriskySecretRef {
@@ -2487,13 +2487,13 @@ export interface VolumeConfigMap {
 }
 
 export interface HilariousItem {
-  key: string;
+  key:   string;
   mode?: number;
-  path: string;
+  path:  string;
 }
 
 export interface VolumeCSI {
-  driver: string;
+  driver:                string;
   fsType?: string;
   nodePublishSecretRef?: FluffyNodePublishSecretRef;
   readOnly?: boolean;
@@ -2512,19 +2512,19 @@ export interface VolumeDownwardAPI {
 export interface AmbitiousItem {
   fieldRef?: HilariousFieldRef;
   mode?: number;
-  path: string;
+  path:              string;
   resourceFieldRef?: HilariousResourceFieldRef;
 }
 
 export interface HilariousFieldRef {
   apiVersion?: string;
-  fieldPath: string;
+  fieldPath:   string;
 }
 
 export interface HilariousResourceFieldRef {
   containerName?: string;
   divisor?: number | string;
-  resource: string;
+  resource:       string;
 }
 
 export interface VolumeEmptyDir {
@@ -2538,7 +2538,7 @@ export interface VolumeEphemeral {
 
 export interface FluffyVolumeClaimTemplate {
   metadata?: StickyMetadata;
-  spec: StickySpec;
+  spec:      StickySpec;
 }
 
 export interface StickyMetadata {
@@ -2563,14 +2563,14 @@ export interface StickySpec {
 
 export interface StickyDataSource {
   apiGroup?: string;
-  kind: string;
-  name: string;
+  kind:      string;
+  name:      string;
 }
 
 export interface StickyDataSourceRef {
   apiGroup?: string;
-  kind: string;
-  name: string;
+  kind:       string;
+  name:       string;
   namespace?: string;
 }
 
@@ -2585,7 +2585,7 @@ export interface StickySelector {
 }
 
 export interface MatchExpression14 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -2599,7 +2599,7 @@ export interface VolumeFc {
 }
 
 export interface VolumeFlexVolume {
-  driver: string;
+  driver:     string;
   fsType?: string;
   options?: { [key: string]: string };
   readOnly?: boolean;
@@ -2618,7 +2618,7 @@ export interface VolumeFlocker {
 export interface VolumeGcePersistentDisk {
   fsType?: string;
   partition?: number;
-  pdName: string;
+  pdName:     string;
   readOnly?: boolean;
 }
 
@@ -2630,12 +2630,12 @@ export interface VolumeGitRepo {
 
 export interface VolumeGlusterfs {
   endpoints: string;
-  path: string;
+  path:      string;
   readOnly?: boolean;
 }
 
 export interface VolumeHostPath {
-  path: string;
+  path:  string;
   type?: string;
 }
 
@@ -2649,13 +2649,13 @@ export interface VolumeIscsi {
   chapAuthSession?: boolean;
   fsType?: string;
   initiatorName?: string;
-  iqn: string;
+  iqn:                string;
   iscsiInterface?: string;
-  lun: number;
+  lun:                number;
   portals?: string[];
   readOnly?: boolean;
   secretRef?: BraggadociousSecretRef;
-  targetPortal: string;
+  targetPortal:       string;
 }
 
 export interface BraggadociousSecretRef {
@@ -2663,9 +2663,9 @@ export interface BraggadociousSecretRef {
 }
 
 export interface VolumeNFS {
-  path: string;
+  path:      string;
   readOnly?: boolean;
-  server: string;
+  server:    string;
 }
 
 export interface VolumePersistentVolumeClaim {
@@ -2675,13 +2675,13 @@ export interface VolumePersistentVolumeClaim {
 
 export interface VolumePhotonPersistentDisk {
   fsType?: string;
-  pdID: string;
+  pdID:    string;
 }
 
 export interface VolumePortworxVolume {
   fsType?: string;
   readOnly?: boolean;
-  volumeID: string;
+  volumeID:  string;
 }
 
 export interface VolumeProjected {
@@ -2701,7 +2701,7 @@ export interface FluffyClusterTrustBundle {
   labelSelector?: MischievousLabelSelector;
   name?: string;
   optional?: boolean;
-  path: string;
+  path:           string;
   signerName?: string;
 }
 
@@ -2711,7 +2711,7 @@ export interface MischievousLabelSelector {
 }
 
 export interface MatchExpression15 {
-  key: string;
+  key:      string;
   operator: string;
   values?: string[];
 }
@@ -2723,9 +2723,9 @@ export interface FluffyConfigMap {
 }
 
 export interface CunningItem {
-  key: string;
+  key:   string;
   mode?: number;
-  path: string;
+  path:  string;
 }
 
 export interface FluffyDownwardAPI {
@@ -2735,19 +2735,19 @@ export interface FluffyDownwardAPI {
 export interface MagentaItem {
   fieldRef?: AmbitiousFieldRef;
   mode?: number;
-  path: string;
+  path:              string;
   resourceFieldRef?: AmbitiousResourceFieldRef;
 }
 
 export interface AmbitiousFieldRef {
   apiVersion?: string;
-  fieldPath: string;
+  fieldPath:   string;
 }
 
 export interface AmbitiousResourceFieldRef {
   containerName?: string;
   divisor?: number | string;
-  resource: string;
+  resource:       string;
 }
 
 export interface FluffySecret {
@@ -2757,31 +2757,31 @@ export interface FluffySecret {
 }
 
 export interface FriskyItem {
-  key: string;
+  key:   string;
   mode?: number;
-  path: string;
+  path:  string;
 }
 
 export interface FluffyServiceAccountToken {
   audience?: string;
   expirationSeconds?: number;
-  path: string;
+  path:               string;
 }
 
 export interface VolumeQuobyte {
   group?: string;
   readOnly?: boolean;
-  registry: string;
+  registry:  string;
   tenant?: string;
   user?: string;
-  volume: string;
+  volume:    string;
 }
 
 export interface VolumeRbd {
   fsType?: string;
-  image: string;
+  image:      string;
   keyring?: string;
-  monitors: string[];
+  monitors:   string[];
   pool?: string;
   readOnly?: boolean;
   secretRef?: SecretRef1;
@@ -2794,14 +2794,14 @@ export interface SecretRef1 {
 
 export interface VolumeScaleIO {
   fsType?: string;
-  gateway: string;
+  gateway:           string;
   protectionDomain?: string;
   readOnly?: boolean;
-  secretRef: SecretRef2;
+  secretRef:         SecretRef2;
   sslEnabled?: boolean;
   storageMode?: string;
   storagePool?: string;
-  system: string;
+  system:            string;
   volumeName?: string;
 }
 
@@ -2817,9 +2817,9 @@ export interface VolumeSecret {
 }
 
 export interface MischievousItem {
-  key: string;
+  key:   string;
   mode?: number;
-  path: string;
+  path:  string;
 }
 
 export interface VolumeStorageos {
@@ -2838,7 +2838,7 @@ export interface VolumeVsphereVolume {
   fsType?: string;
   storagePolicyID?: string;
   storagePolicyName?: string;
-  volumePath: string;
+  volumePath:         string;
 }
 
 export interface Startup {
@@ -2859,7 +2859,7 @@ export interface StartupExec {
 }
 
 export interface StartupGrpc {
-  port: number;
+  port:     number;
   service?: string;
 }
 
@@ -2867,18 +2867,18 @@ export interface StartupHTTPGet {
   host?: string;
   httpHeaders?: HTTPHeader2[];
   path?: string;
-  port: number | string;
+  port:         number | string;
   scheme?: string;
 }
 
 export interface HTTPHeader2 {
-  name: string;
+  name:  string;
   value: string;
 }
 
 export interface StartupTCPSocket {
   host?: string;
-  port: number | string;
+  port:  number | string;
 }
 
 export interface User {
@@ -2886,19 +2886,19 @@ export interface User {
 }
 
 export interface TenantStatus {
-  availableReplicas: number;
-  certificates: Certificates;
-  currentState: string;
+  availableReplicas:   number;
+  certificates:        Certificates;
+  currentState:        string;
   drivesHealing?: number;
   drivesOffline?: number;
   drivesOnline?: number;
   healthMessage?: string;
   healthStatus?: string;
-  pools: StatusPool[];
+  pools:               StatusPool[];
   provisionedBuckets?: boolean;
   provisionedUsers?: boolean;
-  revision: number;
-  syncVersion: string;
+  revision:            number;
+  syncVersion:         string;
   usage?: Usage;
   waitingOnReady?: Date;
   writeQuorum?: number;
@@ -2941,8 +2941,8 @@ export interface MinioCA {
 
 export interface StatusPool {
   legacySecurityContext?: boolean;
-  ssName: string;
-  state: string;
+  ssName:                 string;
+  state:                  string;
 }
 
 export interface Usage {
@@ -2954,7 +2954,7 @@ export interface Usage {
 }
 
 export interface Tier {
-  Name: string;
+  Name:      string;
   totalSize: number;
   Type?: string;
 }

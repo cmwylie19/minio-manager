@@ -1,0 +1,45 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: miniomanagers.uds.dev
+spec:
+  group: uds.dev
+  scope: Namespaced
+  names:
+    kind: MinioManager
+    plural: miniomanagers
+    singular: miniomanager
+    shortNames:
+      - mm
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                secrets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      fromNamespace:
+                        type: string
+                      toNamespace:
+                        type: string
+            status:
+              type: object
+              properties:
+                synced:
+                  type: boolean
+                  default: false
+                lastSync:
+                  type: string
+      subresources:
+        status: {}
