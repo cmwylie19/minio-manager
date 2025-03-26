@@ -16,7 +16,12 @@ k label no/k3d-minio-manager-agent-1  minio=true
 k label no/k3d-minio-manager-agent-2  minio=true
 ```
 
+Start Pepr dev mode in a (side) terminal or background
+```bash
+npx pepr dev --confirm
+```
 
+Create a `Tenant` instance
 ```yaml
 kubectl apply -f -<<EOF
 apiVersion: minio.min.io/v2
@@ -26,7 +31,7 @@ metadata:
   namespace: minio
 spec:
   pools:
-    - servers: 2
+    - servers: 2 # should get mutated
       name: default
       volumesPerServer: 1
       volumeClaimTemplate:
@@ -74,7 +79,7 @@ EOF
 Check if the secret was copied
 
 ```bash
-kubectl get secret -n default something
+kubectl get secret something
 ```
 
 Create a new secret to make sure it works
@@ -107,4 +112,10 @@ Get the secrets in default namespace
 
 ```bash
 kubectl get secret 
+```
+
+```output
+NAME             TYPE     DATA   AGE
+something        Opaque   1      31s
+something-else   Opaque   1      8s
 ```
