@@ -1,4 +1,4 @@
-import { Capability, K8s, a, kind, Log } from "pepr";
+import { Capability, K8s, kind, Log } from "pepr";
 import { Tenant } from "./generated/tenant-v2";
 import { MinioManager } from "./generated/miniomanager-v1alpha1";
 
@@ -10,7 +10,6 @@ export const manager = new Capability({
 const { When } = manager;
 
 const minIOLabel = "minio";
-const managerInstance = process.env.MANAGER_INSTANCE || "minio-manager";
 let currentManager = "";
 
 /*
