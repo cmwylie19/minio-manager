@@ -1,9 +1,6 @@
 # MinIO Manager
 
-Some background on the capability: Minio Operator creates a statefulset per minio pool whose size is set according to the number of servers.  The operator can also set anti-affinity and nodeSelector attributes for the STS.  It's desirable to only have one STS pod per node, and only certain nodes should be schedulable, so that's covered. However, there may be nodes dropping and joining the cluster with the desired nodSelector labels, but without manually modifying the Tenant CR, you wont get new pods automatically being provisioned on new nodes.
-
-
-One caveat might be that idk if Pepr would be able to set the Tenant servers  without prior knowledge of the Tenant CRD.
+Manages MinIO instances in a Kubernetes cluster by mutating the MinIO Tenant CRD to have the correct number of servers based on available nodes and replicates secrets to namespaces where MinIO is consumed.
 
 
 
@@ -11,45 +8,14 @@ One caveat might be that idk if Pepr would be able to set the Tenant servers  wi
 
 ```bash
 npm run k3d-setup   
-npm run apply-crd    
+npm run apply-crd   
+npm run generate-crd
 kubectl create ns minio
 k label no/k3d-minio-manager-agent-0  minio=true
 k label no/k3d-minio-manager-agent-1  minio=true
 k label no/k3d-minio-manager-agent-2  minio=true
 ```
 
-```yaml
-kubectl apply -f -<<EOF
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: project-statefulset
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: project
-  serviceName: project-service
-  template:
-    metadata:
-      labels:
-        app: project
-    spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - project
-              topologyKey: kubernetes.io/hostname
-      containers:
-        - name: project-container
-          image: nginx
-EOF
-```
 
 ```yaml
 kubectl apply -f -<<EOF
@@ -76,12 +42,69 @@ spec:
 EOF
 ```
 
+Get the servers (should be three)
+
 ```bash
-> kubectl patch tenant minio -n minio --type='json' -p='[{"op": "replace", "path": "/spec/pools/0/servers", "value": 3}]'
-The Tenant "minio" is invalid: spec.pools[0].servers: Invalid value: "integer": servers is immutable
+kubectl get tenant -n minio minio -ojsonpath="{.spec.pools[0].servers}"
 ```
 
+Create a secret for MinioManager to clone
 
-## Questions
+```bash
+kubectl create secret generic -n minio something --from-literal=hi=there
+```
 
-1. Will the tenant instance start with correct number of servers or do we need to ensure that it is correct?
+Create an instance of MinioManager
+
+```yaml
+kubectl apply -f -<<EOF
+apiVersion: uds.dev/v1alpha1
+kind: MinioManager
+metadata:
+  name: minio-manager
+  namespace: minio
+spec:
+  secrets:
+    - name: something
+      fromNamespace: minio
+      toNamespace: default
+EOF
+```
+
+Check if the secret was copied
+
+```bash
+kubectl get secret -n default something
+```
+
+Create a new secret to make sure it works
+
+```bash
+kubectl create secret generic -n minio something-else --from-literal=hi=there
+```
+
+Update the instance of MinioManager
+
+```yaml
+kubectl apply -f -<<EOF
+apiVersion: uds.dev/v1alpha1
+kind: MinioManager
+metadata:
+  name: minio-manager
+  namespace: minio
+spec:
+  secrets:
+    - name: something
+      fromNamespace: minio
+      toNamespace: default
+    - name: something-else
+      fromNamespace: minio
+      toNamespace: default
+EOF
+```
+
+Get the secrets in default namespace
+
+```bash
+kubectl get secret 
+```
