@@ -1,58 +1,41 @@
 import { beforeAll, afterAll, describe, it, expect } from "@jest/globals";
-import { execSync, spawnSync } from "node:child_process";
+import { execSync } from "node:child_process";
 describe("minio-manager", () => {
-  beforeAll(async () => {
+  beforeAll(() => {
     execSync("npm run k3d-setup", { stdio: "inherit" });
     execSync("npm run apply-crd", { stdio: "inherit" });
+    execSync("npx pepr@latest build", { stdio: "inherit" });
+    execSync("kubectl apply -f ./dist/pepr-module-minio-manager.yaml", { stdio: "inherit" });
+    execSync("kubectl label no/k3d-minio-manager-agent-0  minio=true", { stdio: "inherit" });
+    execSync("kubectl label no/k3d-minio-manager-agent-1  minio=true", { stdio: "inherit" });
+    execSync("kubectl label no/k3d-minio-manager-agent-2  minio=true", { stdio: "inherit" });
+    execSync("kubectl create ns minio", { stdio: "inherit" });
+    execSync("kubectl create secret generic something --from-literal=hi=there -n minio", { stdio: "inherit" });
+    execSync("kubectl create secret generic something-else --from-literal=hi=there -n minio", { stdio: "inherit" });
+    execSync("kubectl wait --for=condition=ready -n pepr-system po -l app --timeout=180s", { stdio: "inherit" });
+    execSync("kubectl apply -f ./e2e/miniomanager.instance.yaml", { stdio: "inherit" });
+    execSync("kubectl apply -f ./e2e/minio.instance.yaml", { stdio: "inherit" });
+  });
+
+  afterAll(async () => {
+    execSync("k3d cluster delete minio-manager", { stdio: "inherit" });
   });
 
   it("should be true", () => {
     expect(true).toBe(true);
   });
 
-  //   it("watches resource creates", async () => {
-  //     const file = `${trc.root()}/capabilities/scenario.create.yaml`;
-  //     const resources = await trc.load(file);
-  //     await fullCreate(resources, kind);
+  it("should mutate the minio instance to have a server pool of 3 based on available nodes", async () => {
+    const servers = execSync("kubectl get tenant -n minio minio -ojsonpath=\"{.spec.pools[0].servers}\"").toString();
+    expect(servers).toBe("3");
+  });
 
-  //     // no direct assertion -- test succeeds when message is logged
-  //     await untilLogged("Watched create-me: create");
-  //   }, secs(10));
-
-  //   it("watches resource create-or-updates", async () => {
-  //     const file = `${trc.root()}/capabilities/scenario.create-or-update.yaml`;
-  //     const resources = await trc.load(file);
-  //     await fullCreate(resources, kind);
-  //     await untilLogged("Watched create-or-update-me: ADDED");
-
-  //     const update = {...resources.at(-1), stringData: { k: "v" }};
-  //     await K8s(kind.Secret).Apply(update);
-
-  //     // no direct assertion -- test succeeds when message is logged
-  //     await untilLogged("Watched create-or-update-me: MODIFIED");
-  //   }, secs(10));
-
-  //   it("watches resource updates", async () => {
-  //     const file = `${trc.root()}/capabilities/scenario.update.yaml`;
-  //     const resources = await trc.load(file);
-  //     await fullCreate(resources, kind);
-
-  //     const update = {...resources.at(-1), stringData: { k: "v" }};
-  //     await K8s(kind.Secret).Apply(update);
-
-  //     // no direct assertion -- test succeeds when message is logged
-  //     await untilLogged("Watched update-me: update");
-  //   }, secs(10));
-
-  //   it("watches resource deletes", async () => {
-  //     const file = `${trc.root()}/capabilities/scenario.delete.yaml`;
-  //     const resources = await trc.load(file);
-  //     await fullCreate(resources, kind);
-
-  //     const { namespace, name } = resources.at(-1).metadata;
-  //     await K8s(kind.Secret).InNamespace(namespace).Delete(name);
-
-  //     // no direct assertion -- test succeeds when message is logged
-  //     await untilLogged("Watched delete-me: delete");
-  //   }, secs(10));
+  it("should copy the secrets based on minio instance to the default namespace", async () => {
+    const expected = "there";
+    const something = execSync("kubectl get secret something -n default -o jsonpath='{.data.hi}' | base64 -d").toString();
+    const somethingElse = execSync("kubectl get secret something-else -n default -o jsonpath='{.data.hi}' | base64 -d").toString();
+    expect(something).toBe(expected);
+    expect(somethingElse).toBe(expected);
+  });
+ 
 });
