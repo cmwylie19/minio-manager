@@ -36,7 +36,7 @@
     "e2e": "jest e2e/minio-manager.e2e.test.ts"
   },
   "dependencies": {
-    "pepr": "0.46.1",
+    "pepr": "0.46.3",
     "undici": "^7.0.1"
   },
   "devDependencies": {
