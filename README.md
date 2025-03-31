@@ -1,5 +1,7 @@
 # MinIO Manager
 
+**Disclaimer** _The minIO Manager is a Kubernetes Operator that needs to be installed _before_ minio is installed since the `Tenant` instance server field is immutable._
+
 Manages MinIO instances in a Kubernetes cluster by mutating the MinIO Tenant CRD to have the correct number of servers based on available nodes and replicates secrets to namespaces where MinIO is consumed.
 
 
