@@ -16,7 +16,7 @@ let currentManager = "";
  * Update the tenant to have the correct number of servers
  */
 When(Tenant)
-  .IsCreatedOrUpdated()
+  .IsCreated()
   .Mutate(async tenant => {
     // Get the list of nodes with the minio label
     const acceptableNodeList = await K8s(kind.Node)
