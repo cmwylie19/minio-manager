@@ -4,6 +4,12 @@
 
 Manages MinIO instances in a Kubernetes cluster by mutating the MinIO Tenant CRD to have the correct number of servers based on available nodes and replicates secrets to namespaces where MinIO is consumed.
 
+## Building
+
+```bash
+npx pepr build -z chart --rbac-mode=scoped --custom-name "generic-minio"
+```
+
 
 
 ## Other
