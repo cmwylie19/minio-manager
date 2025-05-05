@@ -32,7 +32,7 @@
   "scripts": {
     "k3d-setup": "k3d cluster delete minio-manager && k3d cluster create minio-manager --agents=3 --k3s-arg '--debug@server:0' --wait && kubectl rollout status deployment -n kube-system",
     "generate-crd": "npx kubernetes-fluent-client crd https://raw.githubusercontent.com/minio/operator/a7dfa7c12072efa56c46d628d09ba29b3baa1c91/resources/base/crds/minio.min.io_tenants.yaml capabilities/generated && npx kubernetes-fluent-client crd k8s/miniomanager.crd.yaml capabilities/generated",
-    "apply-crd": "kubectl apply -f https://raw.githubusercontent.com/minio/operator/a7dfa7c12072efa56c46d628d09ba29b3baa1c91/resources/base/crds/minio.min.io_tenants.yaml && kubectl apply -f k8s/miniomanager.crd.yaml",
+    "apply-crd": "kubectl apply -f https://raw.githubusercontent.com/minio/operator/a7dfa7c12072efa56c46d628d09ba29b3baa1c91/resources/base/crds/minio.min.io_tenants.yaml",
     "e2e": "jest e2e/minio-manager.e2e.test.ts"
   },
   "dependencies": {
