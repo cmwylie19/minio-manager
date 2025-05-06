@@ -10,7 +10,9 @@ describe("minio-manager", () => {
     execSync("kubectl label no/k3d-minio-manager-agent-1  minio=true", { stdio: "inherit" });
     execSync("kubectl label no/k3d-minio-manager-agent-2  minio=true", { stdio: "inherit" });
     execSync("kubectl create ns minio", { stdio: "inherit" });
-    execSync("kubectl wait --for=condition=ready -n pepr-system po -l app --timeout=180s", { stdio: "inherit" });
+    execSync("kubectl wait --for=condition=ready -n pepr-system po -l app --timeout=180s", {
+      stdio: "inherit",
+    });
     execSync("kubectl apply -f ./e2e/minio.instance.yaml", { stdio: "inherit" });
   });
 
@@ -19,8 +21,9 @@ describe("minio-manager", () => {
   });
 
   it("should mutate the minio instance to have a server pool of 3 based on available nodes", async () => {
-    const servers = execSync("kubectl get tenant -n minio minio -ojsonpath=\"{.spec.pools[0].servers}\"").toString();
+    const servers = execSync(
+      'kubectl get tenant -n minio minio -ojsonpath="{.spec.pools[0].servers}"',
+    ).toString();
     expect(servers).toBe("3");
   });
-
 });

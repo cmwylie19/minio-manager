@@ -1,4 +1,4 @@
-import { Capability, K8s, kind, Log } from "pepr";
+import { Capability, K8s, kind } from "pepr";
 import { Tenant } from "./generated/tenant-v2";
 
 export const manager = new Capability({
@@ -17,9 +17,7 @@ When(Tenant)
   .IsCreated()
   .Mutate(async tenant => {
     // Get the list of nodes with the minio label
-    const acceptableNodeList = await K8s(kind.Node)
-      .WithLabel(minIOLabel, "true")
-      .Get();
+    const acceptableNodeList = await K8s(kind.Node).WithLabel(minIOLabel, "true").Get();
 
     // Set the annotation to the tenant
     tenant.SetAnnotation("pepr.dev/controller", "minio-manager");
@@ -29,9 +27,7 @@ When(Tenant)
   })
   .Validate(async tenant => {
     // Get the list of nodes with the minio label
-    const acceptableNodeList = await K8s(kind.Node)
-      .WithLabel(minIOLabel, "true")
-      .Get();
+    const acceptableNodeList = await K8s(kind.Node).WithLabel(minIOLabel, "true").Get();
 
     // Check if the number of servers in the tenant matches the number of acceptable nodes
     if (tenant.Raw.spec.pools[0].servers !== acceptableNodeList.items.length) {
