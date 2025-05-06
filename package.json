@@ -21,12 +21,15 @@
         "pepr.dev": "minio-manager"
       }
     },
+    "rbac": [{"apiGroups": [""], "resources": ["nodes"], "verbs": ["get", "list"]}],
+    "rbacMode": "scoped",
     "alwaysIgnore": {
       "namespaces": []
     },
     "includedFiles": [],
     "env": {
-      "MANAGER_INSTANCE": "minio-manager"
+      "MANAGER_INSTANCE": "minio-manager",
+      "PINO_TIME_STAMP": "iso"
     }
   },
   "scripts": {
