@@ -39,8 +39,8 @@
     "e2e": "jest e2e/minio-manager.e2e.test.ts"
   },
   "dependencies": {
-    "pepr": "^0.50.0",
-    "undici": "^7.9.0"
+    "pepr": "^0.51.0",
+    "undici": "^7.10.0"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
