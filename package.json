@@ -52,8 +52,8 @@
     "e2e": "jest e2e/minio-manager.e2e.test.ts"
   },
   "dependencies": {
-    "pepr": "^0.51.0",
-    "undici": "^7.10.0"
+    "pepr": "^0.51.5",
+    "undici": "^7.11.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
